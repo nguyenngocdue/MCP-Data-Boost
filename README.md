@@ -116,3 +116,18 @@ All operations are persisted in `data/users.json`:
   - Multi-agent systems
 - Compatible with `langchain` and `mcp` SDKs
 
+----------------------------------Run the Frontend----------------------------------
+
+## 🚀 Run the Frontend
+1. Navigate to the frontend directory:
+   ```bash
+   cd mcp-json-ui
+2. Install dependencies:
+
+   ```bash
+  npm install
+3.Start the development server:
+
+   ```bash
+  npm run dev
+Open your browser and go to the URL shown in the terminal (usually http://localhost:5173).
