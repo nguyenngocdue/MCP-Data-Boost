@@ -57,17 +57,29 @@ You can use variations of these formats:
 
 ---
 
-How to run
+## ⚙️ How to Run the Backend
 
+You can start different servers using **Uvicorn**. Run one of the following commands depending on which server you want to launch:
+
+```bash
+# Simple server
 uvicorn simple_server:app --host 0.0.0.0 --port 8000 --reload
+
+# Server with customization
 uvicorn server_customization:app --host 0.0.0.0 --port 8000 --reload
+
+# Multi-agents server
 uvicorn server_multi_agents:app --host 0.0.0.0 --port 8000 --reload
+
+# Dynamic server
 uvicorn dynamic_server:app --host 0.0.0.0 --port 8000 --reload
+
+# Dynamic server with customization
 uvicorn dynamic_server_customization:app --host 0.0.0.0 --port 8000 --reload
+
+# Main API server
 uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 
-
-#####
 
 |||||||||||||||||||||||||||||||||||||server_customization.py|||||||||||||||||||||||||||||||||||||
 # `server_customization.py` – Customizable MCP Server with LLM-Powered User Management
