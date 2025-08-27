@@ -194,7 +194,7 @@ flowchart TD
 ```
 
 
-Explanations
+📘 Explanations
 ```mermaid
 flowchart TD
     %% === Styles ===
@@ -204,46 +204,67 @@ flowchart TD
     classDef process  fill:#c8e6c9,stroke:#2e7d32,stroke-width:1px,color:#000;
     classDef note     fill:#f5f5f5,stroke:#666,stroke-dasharray: 3 3,color:#000;
 
-    %% === Core Nodes ===
+    %% === Core Flow (left column) ===
     A[Start] --> B[Load Configuration]
     B --> C[Initialize Servers]
     C --> D[Discover Tools]
     D --> E[Format Tools for LLM]
     E --> F[Wait for User Input]
-    
     F --> G{User Input Received?}
     G --> H[Send Input to LLM]
     H --> I{LLM Decision}
     I -->|🔧 Tool Call| J[Execute Tool]
     I -->|💬 Direct Response| K[Return Response to User]
-    
     J --> L[Return Tool Result]
     L --> M[Send Result to LLM]
     M --> N[LLM Interprets Result]
     N --> O[Present Final Response to User]
-    
     K --> O
     O --> F
 
-    %% === Explanations ===
-    A_note[🔹 Entry point of the workflow]:::note -.-> A
-    B_note[🔹 Load configuration files: API keys, environment variables, system settings]:::note -.-> B
-    C_note[🔹 Establish server sessions for available services]:::note -.-> C
-    D_note[🔹 Query servers to discover accessible tools]:::note -.-> D
-    E_note[🔹 Convert tool specs into schemas for LLM use]:::note -.-> E
-    F_note[🔹 Idle state — waiting for user request]:::note -.-> F
-    G_note[🔹 Decision: check if user has submitted input]:::note -.-> G
-    H_note[🔹 Forward user query to the LLM for reasoning]:::note -.-> H
-    I_note[🔹 Decision: respond directly or invoke a tool]:::note -.-> I
-    J_note[🔹 Execute the selected tool as instructed by LLM]:::note -.-> J
-    L_note[🔹 Tool produces raw results]:::note -.-> L
-    M_note[🔹 Send results back to LLM for interpretation]:::note -.-> M
-    N_note[🔹 LLM refines, interprets, and structures the answer]:::note -.-> N
-    O_note[🔹 User receives the final, polished response]:::note -.-> O
-    K_note[🔹 Path where LLM answers without tool usage]:::note -.-> K
+    %% === Explanations with Icons (right column) ===
+    subgraph EX["📘 Explanations (step-by-step)"]
+      direction TB
+      EA[🟡 Entry point of the workflow]:::note
+      EB[⚙️ Load configuration files: API keys, environment variables, settings]:::note
+      EC[⚙️ Initialize server connections for available services]:::note
+      ED[🛠️ Discover accessible tools from connected servers]:::note
+      EE[🛠️ Prepare tool schemas for LLM consumption]:::note
+      EF[⏳ Idle state — waiting for user request]:::note
+      EG[❓ Decision — has the user submitted input?]:::note
+      EH[📤 Forward the request to the LLM for reasoning]:::note
+      EI[❓ Decision — respond directly or invoke a tool]:::note
+      EJ[🛠️ Execute the selected tool per LLM instruction]:::note
+      EL[📥 Tool returns raw results]:::note
+      EM[📤 Send results back to the LLM for interpretation]:::note
+      EN[🧠 LLM interprets and structures the final answer]:::note
+      EK[💬 Direct-answer path without tool usage]:::note
+      EO[💬 Deliver a polished response to the user]:::note
+
+      %% Keep vertical order
+      EA --> EB --> EC --> ED --> EE --> EF --> EG --> EH --> EI --> EJ --> EL --> EM --> EN --> EK --> EO
+    end
+
+    %% === Dotted links (horizontal mapping) ===
+    A -.-> EA
+    B -.-> EB
+    C -.-> EC
+    D -.-> ED
+    E -.-> EE
+    F -.-> EF
+    G -.-> EG
+    H -.-> EH
+    I -.-> EI
+    J -.-> EJ
+    L -.-> EL
+    M -.-> EM
+    N -.-> EN
+    K -.-> EK
+    O -.-> EO
 
     %% === Apply Styles ===
     class A start;
     class B,C,D,E,F step;
     class G,I decision;
     class H,J,L,M,N process;
+
