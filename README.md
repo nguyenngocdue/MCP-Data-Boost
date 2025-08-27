@@ -155,32 +155,41 @@ CRUD operations supported:
 
 ---
 ## 🔄 MCP Workflow Diagram
+
 ```mermaid
 flowchart TD
+  %% ==== Styles ====
   classDef start fill:#ffeb3b,stroke:#333,stroke-width:1px,color:#000;
   classDef step fill:#bbdefb,stroke:#1a237e,stroke-width:1px,color:#000;
   classDef decision fill:#ffe082,stroke:#ff6f00,stroke-width:1px,color:#000;
   classDef process fill:#c8e6c9,stroke:#2e7d32,stroke-width:1px,color:#000;
   classDef end fill:#aed581,stroke:#1b5e20,stroke-width:2px,color:#000;
 
-  A([Start]):::start --> B[Load Config Files]:::step
-  B --> C[Initialize MCP Servers]:::step
-  C --> D[Discover Available Tools]:::step
-  D --> E[Prepare Tool Schemas for LLM]:::step
-  E --> F[Wait for User Query]:::step
-  
-  F --> G{Parse User Input}:::decision
-  G --> H[Send Input to LLM]:::process
-  H --> I{LLM Decision}:::decision
-  
-  I -->|🔧 Tool Call| J[Execute Tool Action]:::process
-  I -->|💬 Direct Answer| K[Return Response to User]:::process
-  
-  J --> L[Return Tool Output]:::process
-  L --> M[Forward Result to LLM]:::process
-  M --> N[LLM Interprets & Formats Result]:::process
-  N --> O([Present Final Response]):::end
-  
+  %% ==== Nodes ====
+  A([Start]) --> B[Load Config Files]
+  B --> C[Initialize MCP Servers]
+  C --> D[Discover Available Tools]
+  D --> E[Prepare Tool Schemas for LLM]
+  E --> F[Wait for User Query]
+
+  F --> G{Parse User Input}
+  G --> H[Send Input to LLM]
+  H --> I{LLM Decision}
+
+  I -->|🔧 Tool Call| J[Execute Tool Action]
+  I -->|💬 Direct Answer| K[Return Response to User]
+
+  J --> L[Return Tool Output]
+  L --> M[Forward Result to LLM]
+  M --> N[LLM Interprets & Formats Result]
+  N --> O([Present Final Response])
+
   K --> O
   O --> F
 
+  %% ==== Class assignments ====
+  class A start;
+  class B,C,D,E,F step;
+  class G,I decision;
+  class H,J,L,M,N,K process;
+  class O end;
