@@ -99,6 +99,7 @@ Choose one of the server options below (all based on **Uvicorn**):
 
 👉 Open your browser at http://localhost:5173
 ```
+![Alt text](pictures\frontend-main-ui.png)
 
 ---
 
@@ -154,7 +155,7 @@ CRUD operations supported:
 
 ---
 ## 🔄 MCP Workflow Diagram
-
+```mermaid
 flowchart TB
   classDef start fill:#fffb91,stroke:#333,stroke-width:1px;
   classDef decision fill:#9ad1ff,stroke:#333,stroke-width:1px;
