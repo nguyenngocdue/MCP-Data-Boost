@@ -105,10 +105,10 @@ Choose one of the server options below (all based on **Uvicorn**):
 📂 Server Customization Example
 
 server_customization.py – A customizable MCP server that integrates with tools + local JSON database.
-MCP Tool Hosting: Exposes CRUD as MCP tools
-Natural Language Interface: Free-text commands parsed by LLM
-Persistent Data: Stored in data/users.json
-Integration Ready: Compatible with langchain, mcp SDKs, multi-agent systems
+- MCP Tool Hosting: Exposes CRUD as MCP tools
+- Natural Language Interface: Free-text commands parsed by LLM
+- Persistent Data: Stored in data/users.json
+- Integration Ready: Compatible with langchain, mcp SDKs, multi-agent systems
 
 CRUD operations supported:
 | Operation     | Description                      |
