@@ -155,7 +155,46 @@ CRUD operations supported:
 
 ---
 ## 🔄 MCP Workflow Diagram
+```mermaid
+flowchart TD
+    %% === Styles ===
+    classDef start    fill:#ffeb3b,stroke:#333,stroke-width:2px,color:#000;
+    classDef step     fill:#bbdefb,stroke:#1a237e,stroke-width:1px,color:#000;
+    classDef decision fill:#ffe082,stroke:#ff6f00,stroke-width:1px,color:#000;
+    classDef process  fill:#c8e6c9,stroke:#2e7d32,stroke-width:1px,color:#000;
+    classDef note     fill:#f5f5f5,stroke:#666,stroke-dasharray: 3 3,color:#000;
 
+    %% === Core Nodes ===
+    A[Start] --> B[Load Configuration]
+    B --> C[Initialize Servers]
+    C --> D[Discover Tools]
+    D --> E[Format Tools for LLM]
+    E --> F[Wait for User Input]
+    
+    F --> G{User Input Received?}
+    G --> H[Send Input to LLM]
+    H --> I{LLM Decision}
+    I -->|🔧 Tool Call| J[Execute Tool]
+    I -->|💬 Direct Response| K[Return Response to User]
+    
+    J --> L[Return Tool Result]
+    L --> M[Send Result to LLM]
+    M --> N[LLM Interprets Result]
+    N --> O[Present Final Response to User]
+    
+    K --> O
+    O --> F
+
+    %% === Apply Styles ===
+    class A start;
+    class B,C,D,E,F step;
+    class G,I decision;
+    class H,J,L,M,N process;
+
+```
+
+
+Explanations
 ```mermaid
 flowchart TD
     %% === Styles ===
