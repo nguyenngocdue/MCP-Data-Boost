@@ -1,145 +1,157 @@
+# 🌐 Natural Language User Management Demo
 
--------------------
-# Natural Language User Management Demo
-A simple demo application that allows managing users via **natural language commands** using:
-- **FastAPI backend** with LLM-powered parsing (OpenAI + MCP tools)
-- **React frontend** with a user-friendly interface
-- Fallback logic for CRUD operations when tools aren't available
-
-This project demonstrates how natural language can be used to perform database-like operations (Create, Read, Update, Delete) without writing code.
+A demo application that allows managing users via **natural language commands**.  
+You can create, update, delete, and list users just by typing sentences in plain English (or Vietnamese).
 
 ---
 
-## 🧩 Features
+## ✨ Features
 
-- ✅ **Natural Language Input**: Type commands like `"create a user named Alice, email alice@test.com"`
-- ✅ **Smart Parsing**: Uses LLM + MCP tools to interpret and execute user intent
-- ✅ **Fallback CRUD Parser**: If tools fail, falls back to structured JSON parsing
-- ✅ **Real-time UI**: View and manage users in a clean, responsive interface
-- ✅ **Auto-refresh**: User list updates automatically after create/update/delete
-- ✅ **Clear Instructions**: Built-in tips to guide users on supported commands
-
----
-
-## 🚀 How It Works
-
-1. You type a command in plain English (e.g., *"delete user 3"*)
-2. The frontend sends it to the FastAPI backend at `/api/users/nl`
-3. The backend:
-   - First tries to handle it using **MCP tools** (if configured)
-   - If not, uses an LLM to **parse the intent** into a structured action
-   - Executes the CRUD operation on `data/users.json`
-4. The result is returned and the user list is refreshed automatically.
+- ✅ **Natural Language Input** – e.g., `"create a user named Alice, email alice@test.com"`
+- ✅ **Smart Parsing** – Uses **LLM + MCP tools** to interpret user intent
+- ✅ **Fallback CRUD Parser** – Falls back to JSON parsing if tool call fails
+- ✅ **Real-time UI** – View and manage users in a clean React interface
+- ✅ **Auto-refresh** – User list updates automatically after changes
+- ✅ **Clear Instructions** – Built-in tips for supported commands
 
 ---
 
-## 💬 Supported Commands
-You can use variations of these formats:
+## ⚙️ Supported Actions
 
-| Action  | Example |
-|--------|--------|
-| **Create** | `create a user named Bob, email bob@example.com` |
-| **Update** | `update user 1: name Alice` or `change email of user 2 to alice@new.com` |
-| **Delete** | `delete user 3` or `remove user with id 3` |
-| **List**   | `list all users` or `show users` |
+| Action                | Example                                                                 |
+|-----------------------|-------------------------------------------------------------------------|
+| **Create**            | `create a user named Bob, email bob@example.com`                        |
+| **Update**            | `update user 1: name Alice` or `change email of user 2 to alice@new.com`|
+| **Delete**            | `delete user 3` or `remove user with id 3`                              |
+| **List**              | `list all users` or `show users`                                        |
+| **Bulk Create**       | `create 5 users named Dev`                                              |
+| **Bulk Create Random**| `create 10 random users` · `tạo 3 người dùng ngẫu nhiên` · `make 2 random testers` |
+| **None** *(fallback)* | `what is the weather today?` → not related to user management            |
 
-> 💡 Tip: Keep commands simple and include clear keywords like `create`, `update`, `email`, `id`.
+---
+
+## 🔎 How It Works
+
+1. **User Input** – You type a command in natural language, e.g., *"delete user 3"*  
+2. **Frontend → Backend** – The request is sent to FastAPI at `/api/users/nl`  
+3. **Backend Processing**:
+   - First tries to use **MCP tools**  
+   - If tools are not available → fallback LLM parser  
+   - Executes CRUD operations on `data/users.json`  
+4. **Response** – The result is returned, UI refreshes automatically  
+
+🌐 **Remote Queries**:  
+If the input is valid but cannot be processed locally (missing data, unsupported action, etc.),  
+it is automatically forwarded to the **MCP-use server** for intelligent response handling.  
+
+💡 *Tip*: You can mix chat + command inputs — the system will recognize which is which.  
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Frontend**: React + Tailwind CSS + ShadCN UI
-- **Backend**: FastAPI (Python)
-- **LLM**: OpenAI (GPT model for parsing & reasoning)
-- **Tooling**: [MCP (Model Context Protocol)](https://github.com/isi-mcp) for tool integration
-- **Storage**: Local JSON file (`data/users.json`)
+- **Frontend** → React + Tailwind CSS + ShadCN UI  
+- **Backend** → FastAPI (Python)  
+- **LLM** → OpenAI GPT models  
+- **Tooling** → [MCP (Model Context Protocol)](https://github.com/isi-mcp), MCP-use  
+- **Storage** → Local JSON file (`data/users.json`)  
 
 ---
 
-## ⚙️ How to Run the Backend
+## 🖥️ Run the Backend
 
-You can start different servers using **Uvicorn**. Run one of the following commands depending on which server you want to launch:
+Choose one of the server options below (all based on **Uvicorn**):
 
 ```bash
-# Simple server
-uvicorn simple_server:app --host 0.0.0.0 --port 8000 --reload
+  # Simple server
+  uvicorn simple_server:app --host 0.0.0.0 --port 8000 --reload
 
-# Server with customization
-uvicorn server_customization:app --host 0.0.0.0 --port 8000 --reload
+  # Server with customization
+  uvicorn server_customization:app --host 0.0.0.0 --port 8000 --reload
 
-# Multi-agents server
-uvicorn server_multi_agents:app --host 0.0.0.0 --port 8000 --reload
+  # Multi-agents server
+  uvicorn server_multi_agents:app --host 0.0.0.0 --port 8000 --reload
 
-# Dynamic server
-uvicorn dynamic_server:app --host 0.0.0.0 --port 8000 --reload
+  # Dynamic server
+  uvicorn dynamic_server:app --host 0.0.0.0 --port 8000 --reload
 
-# Dynamic server with customization
-uvicorn dynamic_server_customization:app --host 0.0.0.0 --port 8000 --reload
+  # Dynamic server with customization
+  uvicorn dynamic_server_customization:app --host 0.0.0.0 --port 8000 --reload
 
-# Main API server
-uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+  # Main API server
+  uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 
+👉 The backend will be available at http://localhost:8000
+```
 
-|||||||||||||||||||||||||||||||||||||server_customization.py|||||||||||||||||||||||||||||||||||||
-# `server_customization.py` – Customizable MCP Server with LLM-Powered User Management
-Run server:
-uvicorn server_customization:app --host 0.0.0.0 --port 8000 --reload
+---
 
-This server is designed to demonstrate a **customizable Model Context Protocol (MCP) host** that integrates with external tools and a local database (simulated via JSON) to support **natural language CRUD operations** on user data.
+🌟 Run the Frontend
+```bash
+  # 1. Navigate to the frontend directory
+  cd mcp-json-ui
 
-## 🧩 Overview
-
-- **Purpose**: Enable users to perform Create, Read, Update, and Delete (CRUD) operations on a user database using natural language.
-- **Core Tech**:
-  - FastAPI (backend server)
-  - OpenAI's `ChatOpenAI` (LLM for intent parsing and reasoning)
-  - MCP (Model Context Protocol) for tool integration
-  - Local JSON file (`data/users.json`) as persistent storage
-
-## 🛠️ Key Features
-
-### 1. **MCP Tool Hosting**
-- The server acts as an **MCP host**, allowing external agents (like `MCPClient`) to discover and invoke tools.
-- Exposes CRUD operations as MCP tools that can be called by LLM agents.
-
-### 2. **Natural Language Interface**
-- Accepts free-text queries (e.g., *"create a user named Alice, email alice@test.com"*)
-- Uses `ChatOpenAI` to interpret user intent
-- Falls back to structured parsing if direct tool calls fail
-
-### 3. **User Data Management (CRUD)**
-All operations are persisted in `data/users.json`:
-
-| Operation | Description |
-|---------|-------------|
-| `create_user` | Add a new user with name and email |
-| `list_users`  | Retrieve all users |
-| `update_user` | Modify name or email by ID |
-| `delete_user` | Remove a user by ID |
-
-> ✅ Email uniqueness is enforced.  
-> ✅ IDs are auto-incremented.
-
-### 4. **Integration with External Agents**
-- Can be used as a backend for:
-  - Autonomous agents
-  - AI assistants
-  - Multi-agent systems
-- Compatible with `langchain` and `mcp` SDKs
-
-----------------------------------Run the Frontend----------------------------------
-
-## 🚀 Run the Frontend
-1. Navigate to the frontend directory:
-   ```bash
-   cd mcp-json-ui
-2. Install dependencies:
-
-   ```bash
+  # 2. Install dependencies
   npm install
-3.Start the development server:
 
-   ```bash
+  # 3. Start the development server
   npm run dev
-Open your browser and go to the URL shown in the terminal (usually http://localhost:5173).
+```
+👉 Open your browser at http://localhost:5173
+
+---
+
+📂 Server Customization Example
+
+    server_customization.py – A customizable MCP server that integrates with tools + local JSON database.
+
+    MCP Tool Hosting: Exposes CRUD as MCP tools
+
+    Natural Language Interface: Free-text commands parsed by LLM
+
+    Persistent Data: Stored in data/users.json
+
+    Integration Ready: Compatible with langchain, mcp SDKs, multi-agent systems
+
+    CRUD operations supported:
+
+    | Operation     | Description                      |
+    | ------------- | -------------------------------- |
+    | `create_user` | Add a new user with name & email |
+    | `list_users`  | Retrieve all users               |
+    | `update_user` | Modify name or email by ID       |
+    | `delete_user` | Remove a user by ID              |
+
+    ✅ Email uniqueness enforced
+    ✅ IDs auto-incremented
+---
+📖 Examples (IN → OUT)
+```bash
+  Ex1 IN:  "create a new user named Minh, email minh@example.com"
+  Ex1 OUT: {"action":"create","name":"Minh","email":"minh@example.com"}
+
+  Ex2 IN:  "delete user with id 3"
+  Ex2 OUT: {"action":"delete","id":3}
+
+  Ex3 IN:  "update user 2: name Nam, email nam@abc.com"
+  Ex3 OUT: {"action":"update","id":2,"name":"Nam","email":"nam@abc.com"}
+
+  Ex4 IN:  "list all users"
+  Ex4 OUT: {"action":"list"}
+
+  Ex5 IN:  "what is the weather today?"
+  Ex5 OUT: {"action":"none","reason":"Question not related to user management"}
+
+  Ex6 IN:  "create 5 users named Dev"
+  Ex6 OUT: {"action":"bulk_create","name":"Dev","count":5}
+
+  Ex7 IN:  "tạo 3 người dùng ngẫu nhiên"
+  Ex7 OUT: {"action":"bulk_create_random","count":3}
+
+  Ex8 IN:  "create 10 random users"
+  Ex8 OUT: {"action":"bulk_create_random","count":10}
+
+  Ex9 IN:  "make 2 random testers"
+  Ex9 OUT: {"action":"bulk_create_random","count":2}
+
+```
