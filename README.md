@@ -158,38 +158,53 @@ CRUD operations supported:
 
 ```mermaid
 flowchart TD
-  %% ==== Styles ====
-  classDef start fill:#ffeb3b,stroke:#333,stroke-width:1px,color:#000;
-  classDef step fill:#bbdefb,stroke:#1a237e,stroke-width:1px,color:#000;
-  classDef decision fill:#ffe082,stroke:#ff6f00,stroke-width:1px,color:#000;
-  classDef process fill:#c8e6c9,stroke:#2e7d32,stroke-width:1px,color:#000;
-  classDef end fill:#aed581,stroke:#1b5e20,stroke-width:2px,color:#000;
+    %% === Styles ===
+    classDef start    fill:#ffeb3b,stroke:#333,stroke-width:2px,color:#000;
+    classDef step     fill:#bbdefb,stroke:#1a237e,stroke-width:1px,color:#000;
+    classDef decision fill:#ffe082,stroke:#ff6f00,stroke-width:1px,color:#000;
+    classDef process  fill:#c8e6c9,stroke:#2e7d32,stroke-width:1px,color:#000;
+    classDef note     fill:#f5f5f5,stroke:#666,stroke-dasharray: 3 3,color:#000;
 
-  %% ==== Nodes ====
-  A([Start]) --> B[Load Config Files]
-  B --> C[Initialize MCP Servers]
-  C --> D[Discover Available Tools]
-  D --> E[Prepare Tool Schemas for LLM]
-  E --> F[Wait for User Query]
+    %% === Core Nodes ===
+    A[Start] --> B[Load Configuration]
+    B --> C[Initialize Servers]
+    C --> D[Discover Tools]
+    D --> E[Format Tools for LLM]
+    E --> F[Wait for User Input]
+    
+    F --> G{User Input Received?}
+    G --> H[Send Input to LLM]
+    H --> I{LLM Decision}
+    I -->|🔧 Tool Call| J[Execute Tool]
+    I -->|💬 Direct Response| K[Return Response to User]
+    
+    J --> L[Return Tool Result]
+    L --> M[Send Result to LLM]
+    M --> N[LLM Interprets Result]
+    N --> O[Present Final Response to User]
+    
+    K --> O
+    O --> F
 
-  F --> G{Parse User Input}
-  G --> H[Send Input to LLM]
-  H --> I{LLM Decision}
+    %% === Explanations ===
+    A_note[🔹 Entry point of the workflow]:::note -.-> A
+    B_note[🔹 Load configuration files: API keys, environment variables, system settings]:::note -.-> B
+    C_note[🔹 Establish server sessions for available services]:::note -.-> C
+    D_note[🔹 Query servers to discover accessible tools]:::note -.-> D
+    E_note[🔹 Convert tool specs into schemas for LLM use]:::note -.-> E
+    F_note[🔹 Idle state — waiting for user request]:::note -.-> F
+    G_note[🔹 Decision: check if user has submitted input]:::note -.-> G
+    H_note[🔹 Forward user query to the LLM for reasoning]:::note -.-> H
+    I_note[🔹 Decision: respond directly or invoke a tool]:::note -.-> I
+    J_note[🔹 Execute the selected tool as instructed by LLM]:::note -.-> J
+    L_note[🔹 Tool produces raw results]:::note -.-> L
+    M_note[🔹 Send results back to LLM for interpretation]:::note -.-> M
+    N_note[🔹 LLM refines, interprets, and structures the answer]:::note -.-> N
+    O_note[🔹 User receives the final, polished response]:::note -.-> O
+    K_note[🔹 Path where LLM answers without tool usage]:::note -.-> K
 
-  I -->|🔧 Tool Call| J[Execute Tool Action]
-  I -->|💬 Direct Answer| K[Return Response to User]
-
-  J --> L[Return Tool Output]
-  L --> M[Forward Result to LLM]
-  M --> N[LLM Interprets & Formats Result]
-  N --> O([Present Final Response])
-
-  K --> O
-  O --> F
-
-  %% ==== Class assignments ====
-  class A start;
-  class B,C,D,E,F step;
-  class G,I decision;
-  class H,J,L,M,N,K process;
-  class O end;
+    %% === Apply Styles ===
+    class A start;
+    class B,C,D,E,F step;
+    class G,I decision;
+    class H,J,L,M,N process;
