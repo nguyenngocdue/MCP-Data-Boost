@@ -151,3 +151,33 @@ CRUD operations supported:
   Ex9 OUT: {"action":"bulk_create_random","count":2}
 
 ```
+
+---
+## 🔄 MCP Workflow Diagram
+
+```mermaid
+flowchart TB
+    A([Start]):::start --> B[Load Configuration]
+    B --> C[Initialize Servers]
+    C --> D[Discover Tools]
+    D --> E[Format Tools for LLM]
+    E --> F[Wait for User Input]
+    F --> G{{User Input}}:::decision
+    
+    %% Path 1: Direct response
+    G -->|Direct Response| H[Return Response to User]
+    H --> Z[Present Final Response to User]:::end
+    
+    %% Path 2: LLM + Tool execution
+    G --> I[Send Input to LLM]
+    I --> J{{LLM Decision}}:::decision
+    J --> K[Execute Tool]
+    K --> L[Return Tool Result]
+    L --> M[Send Request to LLM]
+    M --> N[LLM Interprets Result]
+    N --> Z[Present Final Response to User]:::end
+
+    %% Styles
+    classDef start fill=#ffff00,stroke=#333,stroke-width=1px;
+    classDef decision fill=#87CEEB,stroke=#333,stroke-width=1px;
+    classDef end fill=#90EE90,stroke=#333,stroke-width=1px;
