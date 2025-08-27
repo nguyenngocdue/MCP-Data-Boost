@@ -1,0 +1,34 @@
+{
+    "mcpServers": {
+        "airbnb": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@openbnb/mcp-server-airbnb",
+                "--ignore-robots-txt"
+            ]
+        },
+        "playwright": {
+            "command": "npx",
+            "args": [
+                "@playwright/mcp@latest"
+            ],
+            "env": {
+                "DISPLAY": ":1"
+            }
+        },
+        "filesystem": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@modelcontextprotocol/server-filesystem",
+                "YOUR_DIRECTORY_HERE"
+            ]
+        },
+        "user-manager": {
+            "command": "python",              
+            "args": ["user_server.py"],
+            "cwd": "user-manager"        
+        }
+    }
+}

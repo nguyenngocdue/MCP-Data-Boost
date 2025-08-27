@@ -1,0 +1,22 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual env
+venv/
+.env
+.env.*
+
+# Node (vì có mcp-json-ui dùng Vite/React)
+node_modules/
+dist/
+build/
+
+# IDE / Editor
+.vscode/
+.idea/
+
+# System
+.DS_Store
+Thumbs.db
