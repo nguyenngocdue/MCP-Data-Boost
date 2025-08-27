@@ -1,4 +1,4 @@
-# 🌐 Natural Language User Management Demo
+# 🌐 Natural Language MCP-Data-Boost / User Management Demo
 
 A demo application that allows managing users via **natural language commands**.  
 You can create, update, delete, and list users just by typing sentences in plain English (or Vietnamese).
@@ -96,34 +96,30 @@ Choose one of the server options below (all based on **Uvicorn**):
 
   # 3. Start the development server
   npm run dev
-```
+
 👉 Open your browser at http://localhost:5173
+```
 
 ---
 
 📂 Server Customization Example
 
-    server_customization.py – A customizable MCP server that integrates with tools + local JSON database.
+server_customization.py – A customizable MCP server that integrates with tools + local JSON database.
+MCP Tool Hosting: Exposes CRUD as MCP tools
+Natural Language Interface: Free-text commands parsed by LLM
+Persistent Data: Stored in data/users.json
+Integration Ready: Compatible with langchain, mcp SDKs, multi-agent systems
 
-    MCP Tool Hosting: Exposes CRUD as MCP tools
+CRUD operations supported:
+| Operation     | Description                      |
+| ------------- | -------------------------------- |
+| `create_user` | Add a new user with name & email |
+| `list_users`  | Retrieve all users               |
+| `update_user` | Modify name or email by ID       |
+| `delete_user` | Remove a user by ID              |
 
-    Natural Language Interface: Free-text commands parsed by LLM
-
-    Persistent Data: Stored in data/users.json
-
-    Integration Ready: Compatible with langchain, mcp SDKs, multi-agent systems
-
-    CRUD operations supported:
-
-    | Operation     | Description                      |
-    | ------------- | -------------------------------- |
-    | `create_user` | Add a new user with name & email |
-    | `list_users`  | Retrieve all users               |
-    | `update_user` | Modify name or email by ID       |
-    | `delete_user` | Remove a user by ID              |
-
-    ✅ Email uniqueness enforced
-    ✅ IDs auto-incremented
+✅ Email uniqueness enforced
+✅ IDs auto-incremented
 ---
 📖 Examples (IN → OUT)
 ```bash
