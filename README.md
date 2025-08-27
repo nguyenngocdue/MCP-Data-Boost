@@ -99,7 +99,7 @@ Choose one of the server options below (all based on **Uvicorn**):
 
 👉 Open your browser at http://localhost:5173
 ```
-![Alt text](pictures\frontend-main-ui.png)
+![Alt text](pictures/frontend-main-ui.png)
 
 ---
 
